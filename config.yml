@@ -1,0 +1,7 @@
+defaultName: shameek
+template: Template %s
+
+logging:
+  level: INFO
+  loggers:
+    hevo: DEBUG
