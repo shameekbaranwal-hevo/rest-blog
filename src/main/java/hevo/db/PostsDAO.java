@@ -3,6 +3,7 @@ package hevo.db;
 import hevo.api.Post;
 import java.util.List;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowMapper;
@@ -25,9 +26,14 @@ public interface PostsDAO {
           + ":userID, "
           + ":content"
           + ")")
-  void insertPost(@Bind("userID") int userID, @Bind("content") String content);
+  @GetGeneratedKeys
+  int insertPost(@Bind("userID") int userID, @Bind("content") String content);
 
   @SqlQuery("SELECT * FROM posts")
   @UseRowMapper(PostsMapper.class)
   List<Post> getPosts();
+
+  @SqlQuery("SELECT * FROM posts WHERE id=:id")
+  @UseRowMapper(PostsMapper.class)
+  Post getPostByID(@Bind("id") int id);
 }

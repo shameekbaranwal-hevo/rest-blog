@@ -20,6 +20,7 @@ public class PostsMapper implements RowMapper<Post> {
    */
   @Override
   public Post map(ResultSet rs, StatementContext ctx) throws SQLException {
+//    ctx.setReturningGeneratedKeys(true);
     return new Post(
         rs.getInt("id"),
         rs.getDate("created_at"),
