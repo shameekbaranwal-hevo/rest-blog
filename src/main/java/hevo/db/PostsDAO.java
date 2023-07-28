@@ -33,6 +33,10 @@ public interface PostsDAO {
   @UseRowMapper(PostsMapper.class)
   List<Post> getPosts();
 
+  @SqlQuery("SELECT * FROM posts WHERE user_id=:userID")
+  @UseRowMapper(PostsMapper.class)
+  List<Post> getPostByUserID(@Bind("userID") int userID);
+
   @SqlQuery("SELECT * FROM posts WHERE id=:id")
   @UseRowMapper(PostsMapper.class)
   Post getPostByID(@Bind("id") int id);

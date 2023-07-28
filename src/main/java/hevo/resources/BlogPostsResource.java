@@ -6,6 +6,7 @@ import hevo.db.PostsDAO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicLong;
 import org.jdbi.v3.core.Jdbi;
 
@@ -23,8 +24,16 @@ public class BlogPostsResource {
 
   @GET
   @Timed
-  public List<Post> getPosts() {
-    return postsDAO.getPosts();
+  public List<Post> getPosts(@QueryParam("userID") OptionalInt userID) {
+    return userID.isPresent() ?
+            postsDAO.getPostByUserID(userID.getAsInt()) :
+            postsDAO.getPosts();
+  }
+
+  @GET
+  @Path("/{id}")
+  public Post getPostByID(@PathParam("id") int id) {
+    return postsDAO.getPostByID(id);
   }
 
   @POST
